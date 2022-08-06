@@ -1,7 +1,5 @@
-import axios, { AxiosPromise, AxiosResponse } from 'axios';
+import axios from 'axios';
 import { get_data } from '../src/utils/api';
-
-jest.mock('axios');
 
 describe('Mock Functions', function(){
     it('can create mock functions', function(){
