@@ -14,11 +14,19 @@ describe('Mock Functions', function(){
 
     it('can mock axios api calls', async function(){
         const axiosMock = axios as jest.MockedFunction<typeof axios>;
-        axiosMock.mockResolvedValueOnce('ok'); // TODO: get rid of the warning
+        axiosMock.mockResolvedValueOnce(new Promise(function(resolve){
+          resolve({
+            data: 'ok',
+            status: 200,
+            statusText: 'OK',
+            config: {},
+            headers: {},
+          })
+        }));
     
         const result = await get_data(axiosMock);
         
-        expect(result).toEqual('ok');
+        expect(result.data).toEqual('ok');
         expect(axios).toHaveBeenCalledWith({
           url: 'https://some-url.com/api',
             method: 'get'
