@@ -1,6 +1,9 @@
 import path from "path"
+import * as filesystem from "fs"
 
-const fs = jest.createMockFromModule('fs');
+const fs: typeof filesystem & {
+  __setMockFiles: (files: string[]) => void
+} = jest.createMockFromModule('fs');
 
 // This is a custom function that our tests can use during setup to specify
 // what the files on the "mock" filesystem should look like when any of the
@@ -20,11 +23,11 @@ function __setMockFiles(newMockFiles: string[]) {
 
 // A custom version of `readdirSync` that reads from the special mocked out
 // file list set via __setMockFiles
-function readdirSync(directoryPath: string) {
-  return mockFiles[directoryPath] || [];
+function readdirSync(directoryPath: filesystem.PathLike) {
+  return mockFiles[directoryPath.toString()] || [];
 }
 
 fs.__setMockFiles = __setMockFiles;
 fs.readdirSync = readdirSync;
 
-export default fs
+module.exports = fs

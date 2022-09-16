@@ -1,7 +1,8 @@
 import axios from "axios";
 import { get_data } from "../src/utils/api";
 
-describe("Mock Functions", function () {
+describe("Mock Functions and Libraries", function () {
+  
   it("can create mock functions", function () {
     const fn = jest.fn();
     fn.mockReturnValueOnce(5);
